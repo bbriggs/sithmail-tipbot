@@ -18,7 +18,8 @@ logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
 # create formatter and add it to the handlers
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 # add the handlers to the logger
 logger.addHandler(ch)
@@ -34,7 +35,7 @@ baseplate_proxy.add_child(IRC,
                           nickname=config['sithmail']['username'],
                           server=config['sithmail']['host'],
                           port=int(config['sithmail']['port']),
-                          use_ssl=config.getboolean('sithmail','ssl'),
+                          use_ssl=config.getboolean('sithmail', 'ssl'),
                           username=config['sithmail']['username'],
                           password=config['sithmail']['password'])
 baseplate_proxy.add_child(Help)
