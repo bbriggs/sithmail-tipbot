@@ -2,13 +2,11 @@ import logging
 import threading
 import configparser
 from Legobot.Lego import Lego
-from Local.Roll import Roll
-from Local.CourageWolf import Encourage
-from Local.BingImageSearch import BingImageSearch
-from Local.WikipediaTopFinder import WikipediaTopFinder
-from Local.XKCD import XKCD
-from Local.CodingLove import CodingLove
-
+from legos.stocks import Stocks
+from legos.xkcd import XKCD
+from legos.dice import Roll
+from legos.wtf import WikipediaTopFinder
+from legos.devopsy import Devopsy
 from Legobot.Connectors.IRC import IRC
 from Legobot.Legos.Help import Help
 
@@ -41,8 +39,7 @@ baseplate_proxy.add_child(IRC,
                           password=config['sithmail']['password'])
 baseplate_proxy.add_child(Help)
 baseplate_proxy.add_child(Roll)
-baseplate_proxy.add_child(Encourage,encouragement='encouragement.txt')
-baseplate_proxy.add_child(BingImageSearch)
 baseplate_proxy.add_child(WikipediaTopFinder)
 baseplate_proxy.add_child(XKCD)
-baseplate_proxy.add_child(CodingLove)
+baseplate_proxy.add_child(Devopsy)
+baseplate_proxy.add_child(Stocks)
