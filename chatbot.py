@@ -6,7 +6,6 @@ from legos.stocks import Stocks
 from legos.xkcd import XKCD
 from legos.dice import Roll
 from legos.wtf import WikipediaTopFinder
-from legos.devopsy import Devopsy
 from Legobot.Connectors.IRC import IRC
 from Legobot.Legos.Help import Help
 
@@ -42,5 +41,4 @@ baseplate_proxy.add_child(Help)
 baseplate_proxy.add_child(Roll)
 baseplate_proxy.add_child(WikipediaTopFinder)
 baseplate_proxy.add_child(XKCD)
-baseplate_proxy.add_child(Devopsy)
 baseplate_proxy.add_child(Stocks)
