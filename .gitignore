@@ -1,3 +1,4 @@
 *.pyc
 .vagrant/
 tips.cfg
+redis-data/*
