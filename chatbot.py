@@ -30,7 +30,7 @@ lock = threading.Lock()
 baseplate = Lego.start(None, lock)
 baseplate_proxy = baseplate.proxy()
 
-r = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8")
+r = redis.StrictRedis(host='redis', port=6379, db=0, charset="utf-8")
 
 # Add children
 baseplate_proxy.add_child(IRC,
