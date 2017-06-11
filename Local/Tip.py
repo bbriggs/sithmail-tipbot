@@ -1,6 +1,5 @@
 from Legobot.Lego import Lego
 import logging
-import re
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +26,8 @@ class Tip(Lego):
         if self._is_incr(cmd):
             resp = self._incr(cmd)
             if resp is not False:
-                return_val = "{} has {} meaningless internet points.".format(cmd[:-2], resp)
+                return_val = "{} has {} meaningless internet points.".format(
+                    cmd[:-2], resp)
             else:
                 logger.debug(str(resp))
                 return_val = "Redis is sleeping right now."
@@ -46,7 +46,7 @@ class Tip(Lego):
             return resp
         else:
             return False
-    
+
     def _handle_opts(self, message):
         try:
             target = message['metadata']['source_channel']
