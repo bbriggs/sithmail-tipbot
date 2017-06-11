@@ -1,7 +1,6 @@
 import logging
 import threading
 import configparser
-import redis
 from Legobot.Lego import Lego
 from legos.stocks import Stocks
 from legos.xkcd import XKCD
@@ -10,6 +9,8 @@ from legos.wtf import WikipediaTopFinder
 from Legobot.Connectors.IRC import IRC
 from Legobot.Legos.Help import Help
 from Local.Tip import Tip
+
+import redis
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -30,7 +31,7 @@ lock = threading.Lock()
 baseplate = Lego.start(None, lock)
 baseplate_proxy = baseplate.proxy()
 
-r = redis.StrictRedis(host='redis', port=6379, db=0, charset="utf-8")
+r = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8")
 
 # Add children
 baseplate_proxy.add_child(IRC,
