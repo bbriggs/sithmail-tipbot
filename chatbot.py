@@ -35,7 +35,8 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8")
 
 # Add children
 baseplate_proxy.add_child(IRC,
-                          channels=['#social'],
+                          channels=[channel.strip() for channel in config.get(
+                              "sithmail", "channels").split(",")],
                           nickname=config['sithmail']['username'],
                           server=config['sithmail']['host'],
                           port=int(config['sithmail']['port']),

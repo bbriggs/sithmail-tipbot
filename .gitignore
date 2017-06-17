@@ -2,3 +2,4 @@
 .vagrant/
 tips.cfg
 redis-data/*
+config.ini
