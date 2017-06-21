@@ -1,6 +1,5 @@
 from Legobot.Lego import Lego
 import logging
-import random
 
 logger = logging.getLogger(__name__)
 
@@ -29,27 +28,33 @@ class Magic8ball(Lego):
         try:
             resp = self.r.srandmember(self.fortunes).decode('utf-8')
         except Exception as e:
-            logger.error("An error occurred while attempting to read from Redis: {}".format(e))
+            logger.error("An error occurred while \
+                         attempting to read from Redis: {}".format(e))
             return "Outlook cloudy. Redis sucks. Try again later."
         if resp is not None:
             return resp
         else:
             logger.error("Redis returned a None when asked for a fortune")
-            return "The magical 8-ball has heard no prayers. Perhaps you should offer advice to those who come after you."
+            return "The magical 8-ball has heard no prayers. \
+                    Perhaps you should offer \
+                    advice to those who come after you."
 
     def _set(self, fortune):
         if len(fortune) > 1:
             fortune = " ".join(fortune[1:])
         else:
-            return "Your advice to those who seek supplication must have actual words..."
+            return "Your advice to those who seek \
+                    supplication must have actual words..."
         try:
             resp = self.r.sadd(self.fortunes, fortune)
         except Exception as e:
-            logger.error("Error while attempting to write to Redis: {}".format(e))
+            logger.error("Error while attempting to \
+                         write to Redis: {}".format(e))
         if resp == 1:
             return "Your plea to the gods of randomness has been received."
         elif resp == 0:
-            logger.warn("Duplicate value received for 8ball set: {}".format(fortune))
+            logger.warn("Duplicate value received \
+                        for 8ball set: {}".format(fortune))
             return "That plea is one I have heard before."
         else:
             logger.error("Unable to write to Redis: {}".format(resp))
@@ -69,4 +74,5 @@ class Magic8ball(Lego):
         return '8ball'
 
     def get_help(self):
-        return 'Shake the magic 8-ball and see what happens. Usage: !8ball. Add a response: !8ball add <message>'
+        return 'Shake the magic 8-ball and see what happens. \
+                Usage: !8ball. Add a response: !8ball add <message>'
