@@ -20,7 +20,7 @@ class Greetings(Lego):
             Bool: Returns true if the first word in the message is a command for this class
         """
         cmds = ['!gray', 'zapp', 'ay', 'yo', 'sup', 'suh', 'hi', 'wassup', 'yarg', 'moin',
-                'bye', 'cya']
+                'bye', 'cya', 'morning']
         return message['text'].split()[0] in cmds
 
     def handle(self, message):
@@ -65,7 +65,7 @@ class Greetings(Lego):
             txt = random.choice(responses)
         elif command == 'moin':
             txt = 'moin {}'.format(message['metadata']['source_username'])
-        elif command in ['ay', 'yo', 'sup', 'hi', 'wassup']:
+        elif command in ['ay', 'yo', 'sup', 'hi', 'wassup', 'morning']:
             responses = ['suh dude', 'yo', 'hey {}'.format(message['metadata']['source_username']), 
                          'howzit', 'sup', 'sup {}'.format(message['metadata']['source_username']),
                          'ayyyyy', 'welcome!']
