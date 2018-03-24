@@ -12,7 +12,8 @@ from Legobot.Legos.Help import Help
 from Local.Tip import Tip
 from Local.magic8ball import Magic8ball
 from Local.greetings import Greetings
-
+from Local.markov import MarkovListener
+from Local.markov import MarkovGenerator
 
 import redis
 
@@ -35,7 +36,7 @@ lock = threading.Lock()
 baseplate = Lego.start(None, lock)
 baseplate_proxy = baseplate.proxy()
 
-r = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8")
+r = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
 
 # Add children
 baseplate_proxy.add_child(IRC,
@@ -45,14 +46,15 @@ baseplate_proxy.add_child(IRC,
                           server=config['sithmail']['host'],
                           port=int(config['sithmail']['port']),
                           use_ssl=config.getboolean('sithmail', 'ssl'),
-                          username=config['sithmail']['username'],
-                          password=config['sithmail']['password'])
+                          username=config['sithmail']['username'])
 baseplate_proxy.add_child(Help)
-baseplate_proxy.add_child(Roll)
-baseplate_proxy.add_child(WikipediaTopFinder)
-baseplate_proxy.add_child(XKCD)
-baseplate_proxy.add_child(Stocks)
-baseplate_proxy.add_child(Tip, r)
-baseplate_proxy.add_child(Magic8ball, r)
-baseplate_proxy.add_child(CTFtime)
-baseplate_proxy.add_child(Greetings)
+#baseplate_proxy.add_child(Roll)
+#baseplate_proxy.add_child(WikipediaTopFinder)
+#baseplate_proxy.add_child(XKCD)
+#baseplate_proxy.add_child(Stocks)
+#baseplate_proxy.add_child(Tip, r)
+#baseplate_proxy.add_child(Magic8ball, r)
+#baseplate_proxy.add_child(CTFtime)
+#baseplate_proxy.add_child(Greetings)
+baseplate_proxy.add_child(MarkovListener, r)
+baseplate_proxy.add_child(MarkovGenerator, r)

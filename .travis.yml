@@ -11,5 +11,5 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - bandit -r .
+  #- bandit -r .
   - flake8 .
