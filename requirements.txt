@@ -7,4 +7,5 @@ legos.stocks
 legos.codinglove
 legos.dice
 legos.ctftime
-redis
+redis==2.10.6
+markovify
