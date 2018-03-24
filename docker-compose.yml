@@ -16,9 +16,13 @@ services:
     volumes:
       - redis-data:/data
     networks:
-      sithmail-tipbot:
+      legobot:
         aliases:
           - redis
 
 volumes:
   redis-data:
+
+networks:
+  legobot:
+    external: false
