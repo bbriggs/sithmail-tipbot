@@ -3,3 +3,4 @@
 tips.cfg
 redis-data/*
 config.ini
+venv/*
