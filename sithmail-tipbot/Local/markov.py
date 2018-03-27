@@ -1,6 +1,8 @@
 import logging
+import re
 import markovify
 from Legobot.Lego import Lego
+from nltk.tokenize import RegexpTokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -16,15 +18,11 @@ class MarkovListener(Lego):
 
     def handle(self, message):
         opts = None
-        logger.info(message)
-        logger.debug("Markov activated")
         if not message['text'].startswith("!"):  # Exclude bot commands from model input
             self.append_text(message['metadata']['source_username'], message['text'])
 
     def append_text(self, user, text):
         key = "text/" + user
-        if not text.endswith("."):
-            text = text + "."
         resp = self.r.rpush(key, text)
 
     @staticmethod
@@ -48,6 +46,7 @@ class MarkovGenerator(Lego):
     def __init__(self, baseplate, lock, redis, *args, **kwargs):
         super().__init__(baseplate, lock)
         self.r = redis
+        self.t = RegexpTokenizer(r'\w+')
 
     @staticmethod
     def listening_for(message):
@@ -80,11 +79,15 @@ class MarkovGenerator(Lego):
     def make_model(self, key):
         combined_model = None
         for msg in self.r.lrange(key, 0, -1):
-            model = markovify.Text(msg, retain_original=False)
-            if combined_model:
-                combined_model = markovify.combine(models=[combined_model, model])
-            else:
-                combined_model = model
+            try:
+                msg = " ".join(self.t.tokenize(msg)) + "."
+                model = markovify.Text(msg, retain_original=False)
+                if combined_model:
+                    combined_model = markovify.combine(models=[combined_model, model])
+                else:
+                    combined_model = model
+            except Exception as e:
+                logger.error("Failed when processing the following message: {}\n{}".format(msg, e))
         return combined_model
 
     def name(self):
