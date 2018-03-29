@@ -9,3 +9,4 @@ legos.dice
 legos.ctftime
 redis==2.10.6
 markovify
+nltk

@@ -1,0 +1,28 @@
+version: "3"
+services:
+  chatbot:
+    restart: always
+    build: ./sithmail-tipbot
+    env_file: .env
+    networks:
+      legobot:
+        aliases:
+          - legobot
+  redis:
+    restart: always
+    image: redis:alpine
+    ports:
+      - "6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      legobot:
+        aliases:
+          - redis
+
+volumes:
+  redis-data:
+
+networks:
+  legobot:
+    external: false
